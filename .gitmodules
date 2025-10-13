@@ -1,3 +1,6 @@
 [submodule "auth-service"]
 	path = auth-service
 	url = git@github.com:DistriSchool/auth-service.git
+[submodule "student-service"]
+	path = student-service
+	url = git@github.com:DistriSchool/student-service.git
