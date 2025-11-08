@@ -23,6 +23,28 @@ services:
     networks:
       - school-network
 
+  student-service:
+    build:
+      context: ./student-service
+      dockerfile: Dockerfile
+    image: distri-school/student-service
+    container_name: student-service
+    env_file:
+      - .env
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB:-distri_school}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER:-postgres}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      SERVER_PORT: 80
+      JWT_SECRET: ${JWT_SECRET}
+    depends_on:
+      - postgres
+      - kafka
+      - zookeeper
+    networks:
+      - school-network
+
   gateway:
     build:
       context: ./gateway
@@ -38,9 +60,7 @@ services:
       - "80:80"
     depends_on:
       - auth-service
-      - postgres
-      - kafka
-      - zookeeper
+      - student-service
     networks:
       - school-network
 
