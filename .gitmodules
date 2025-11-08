@@ -7,3 +7,6 @@
 [submodule "gateway"]
 	path = gateway
 	url = git@github.com:DistriSchool/gateway.git
+[submodule "frontend"]
+	path = frontend
+	url = git@github.com:DistriSchool/frontend.git
