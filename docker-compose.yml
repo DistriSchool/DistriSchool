@@ -3,7 +3,7 @@ services:
     build:
       context: ./auth-service
       dockerfile: Dockerfile
-    image: distri-school/auth-service
+    image: clysman/ds-auth-service
     container_name: auth-service
     env_file:
       - .env
@@ -36,7 +36,7 @@ services:
     build:
       context: ./student-service
       dockerfile: Dockerfile
-    image: distri-school/student-service
+    image: clysman/ds-student-service
     container_name: student-service
     env_file:
       - .env
@@ -58,7 +58,7 @@ services:
     build:
       context: ./teacher-service
       dockerfile: Dockerfile
-    image: distri-school/teacher-service
+    image: clysman/ds-teacher-service
     container_name: teacher-service
     env_file:
       - .env
@@ -79,7 +79,7 @@ services:
     build:
       context: ./gateway
       dockerfile: Dockerfile
-    image: distri-school/gateway
+    image: clysman/ds-gateway
     container_name: gateway
     env_file:
       - .env
@@ -100,7 +100,7 @@ services:
       dockerfile: Dockerfile
       args:
         NEXT_PUBLIC_BACKEND_URL: http://localhost
-    image: distri-school/frontend
+    image: clysman/ds-frontend
     container_name: frontend
     ports:
       - "3000:3000"
