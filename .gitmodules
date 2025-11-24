@@ -10,3 +10,6 @@
 [submodule "frontend"]
 	path = frontend
 	url = git@github.com:DistriSchool/frontend.git
+[submodule "teacher-service"]
+	path = teacher-service
+	url = git@github.com:DistriSchool/teacher-service.git
