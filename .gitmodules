@@ -13,3 +13,9 @@
 [submodule "teacher-service"]
 	path = teacher-service
 	url = git@github.com:DistriSchool/teacher-service.git
+[submodule "classroom-service"]
+	path = classroom-service
+	url = git@github.com:DistriSchool/classroom-service.git
+[submodule "course-service"]
+	path = course-service
+	url = git@github.com:DistriSchool/course-service.git

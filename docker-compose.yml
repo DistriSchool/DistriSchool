@@ -54,6 +54,50 @@ services:
     networks:
       - school-network
 
+  classroom-service:
+    build:
+      context: ./classroom-service
+      dockerfile: Dockerfile
+    image: clysman/ds-classroom-service
+    container_name: classroom-service
+    env_file:
+      - .env
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB:-distri_school}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER:-postgres}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      SERVER_PORT: 80
+      JWT_SECRET: ${JWT_SECRET}
+    depends_on:
+      - postgres
+      - kafka
+      - zookeeper
+    networks:
+      - school-network
+
+  course-service:
+    build:
+      context: ./course-service
+      dockerfile: Dockerfile
+    image: clysman/ds-course-service
+    container_name: course-service
+    env_file:
+      - .env
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB:-distri_school}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER:-postgres}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      SERVER_PORT: 80
+      JWT_SECRET: ${JWT_SECRET}
+    depends_on:
+      - postgres
+      - kafka
+      - zookeeper
+    networks:
+      - school-network
+
   teacher-service:
     build:
       context: ./teacher-service
@@ -92,23 +136,25 @@ services:
       - auth-service
       - student-service
       - teacher-service
+      - classroom-service
+      - course-service
     networks:
       - school-network
 
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-      args:
-        NEXT_PUBLIC_BACKEND_URL: http://localhost
-    image: clysman/ds-frontend
-    container_name: frontend
-    ports:
-      - "3000:3000"
-    depends_on:
-      - gateway
-    networks:
-      - school-network
+  # frontend:
+  #   build:
+  #     context: ./frontend
+  #     dockerfile: Dockerfile
+  #     args:
+  #       NEXT_PUBLIC_BACKEND_URL: http://localhost
+  #   image: clysman/ds-frontend
+  #   container_name: frontend
+  #   ports:
+  #     - "3000:3000"
+  #   depends_on:
+  #     - gateway
+  #   networks:
+  #     - school-network
 
   postgres:
     image: postgres:16-alpine
